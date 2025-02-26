@@ -27,7 +27,7 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/comments", commentRoutes);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect("mongodb+srv://admin123:admin123@cluster0.o2tle.mongodb.net/neurostack_prototype", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -36,4 +36,5 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`API documentation available at: http://localhost:${PORT}/api-docs`);
 });
