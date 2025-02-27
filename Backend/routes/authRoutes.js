@@ -18,9 +18,14 @@ const router = express.Router();
  *               name:
  *                 type: string
  *               email:
- *                 type: string
+ *                  type: string
+ *                  format: email
+ *       
  *               password:
  *                 type: string
+ *               role:
+ *                  type: string
+ *                  enum: [user, admin]
  *     responses:
  *       201:
  *         description: User registered successfully
@@ -40,7 +45,8 @@ router.post("/register", registerUser);
  *             type: object
  *             properties:
  *               email:
- *                 type: string
+ *                  type: string
+ *                  format: email
  *               password:
  *                 type: string
  *     responses:

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -13,7 +13,7 @@ exports.registerUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ name, email, password: hashedPassword, role });
     await user.save();
 
     const token = jwt.sign(
@@ -22,7 +22,7 @@ exports.registerUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(201).json({ message: "User registered successfully", token });
+    res.status(201).json({ message: "User registered successfully", ...user._doc,token });
   } catch (error) {
     res.status(500).json({ message: "Error registering user" });
   }
@@ -43,7 +43,7 @@ exports.loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ ...user._doc, token });
+    res.json({ message: "Login successful", ...user._doc, token });
   } catch (error) {
     res.status(500).json({ message: "Error logging in" });
   }

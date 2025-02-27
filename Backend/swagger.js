@@ -9,46 +9,45 @@ const options = {
       description: "API documentation for the NeuroStack task management system",
     },
     servers: [{ url: "http://localhost:5000" }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+      schemas: {
+        Task: {
+          type: "object",
+          properties: {
+            _id: { type: "string" },
+            title: { type: "string" },
+            description: { type: "string" },
+            assignedTo: { type: "string" },
+            status: {
+              type: "string",
+              enum: ["Pending", "In Progress", "Completed"],
+            },
+            deadline: { type: "string", format: "date" },
+          },
+        },
+        Comment: {
+          type: "object",
+          properties: {
+            _id: { type: "string" },
+            taskId: { type: "string" },
+            userId: { type: "string" },
+            comment: { type: "string" },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }], // 🔹 Apply Bearer Authentication globally
   },
   apis: ["./routes/*.js"],
 };
 
 const swaggerDocs = swaggerJsDoc(options);
 module.exports = swaggerDocs;
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     Task:
- *       type: object
- *       properties:
- *         _id:
- *           type: string
- *         title:
- *           type: string
- *         description:
- *           type: string
- *         assignedTo:
- *           type: string
- *         status:
- *           type: string
- *           enum: [Pending, In Progress, Completed]
- *         deadline:
- *           type: string
- *           format: date
- *     Comment:
- *       type: object
- *       properties:
- *         _id:
- *           type: string
- *         taskId:
- *           type: string
- *         userId:
- *           type: string
- *         comment:
- *           type: string
- *         createdAt:
- *           type: string
- *           format: date-time
- */

@@ -1,28 +1,28 @@
 const express = require("express");
-const { createTask, getTasks, updateTask, deleteTask } = require("../controllers/taskController");
-const { createComment, getComments } = require("../controllers/commentController");
+const {
+  createTask,
+  getTasks,
+  updateTask,
+  deleteTask,
+} = require("../controllers/taskController");
+const {
+  createComment,
+  getComments,
+} = require("../controllers/commentController");
 
 const router = express.Router();
 
 const authorizeAdmin = require("../middleware/authorizeAdmin");
 const authorizeUser = require("../middleware/authorizeUser");
 
-// Create a task (Only admin can assign to users)
-
-
-// Get tasks (Admin sees all tasks, user sees their own tasks)
-
-
-// Update a task (Only admin or the assigned user can update)
-
-
-// Delete a task (Only admin or the assigned user can delete)
 /**
  * @swagger
  * /api/tasks:
  *   post:
  *     summary: Create a new task
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []  # Authentication needed
  *     requestBody:
  *       required: true
  *       content:
@@ -34,19 +34,33 @@ const authorizeUser = require("../middleware/authorizeUser");
  *                 type: string
  *               description:
  *                 type: string
- *               assignedTo:
- *                 type: string
  *               status:
  *                 type: string
  *                 enum: [Pending, In Progress, Completed]
- *               deadline:
+ *               assignedTo:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: User ID assigned to the task
+ *               dueDate:
  *                 type: string
  *                 format: date
  *     responses:
  *       201:
  *         description: Task created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 task:
+ *                   $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Invalid input
  *       500:
- *         description: Error creating task
+ *         description: Server error
  */
 router.post("/", authorizeAdmin, createTask);
 
@@ -56,6 +70,8 @@ router.post("/", authorizeAdmin, createTask);
  *   get:
  *     summary: Get all tasks
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []  # Authentication needed
  *     responses:
  *       200:
  *         description: List of tasks
@@ -74,8 +90,10 @@ router.get("/", authorizeUser, getTasks);
  * @swagger
  * /api/tasks/{id}:
  *   put:
- *     summary: Update a task by ID
+ *     summary: Update an existing task
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []  # Authentication needed
  *     parameters:
  *       - in: path
  *         name: id
@@ -93,21 +111,37 @@ router.get("/", authorizeUser, getTasks);
  *                 type: string
  *               description:
  *                 type: string
- *               assignedTo:
- *                 type: string
  *               status:
  *                 type: string
  *                 enum: [Pending, In Progress, Completed]
- *               deadline:
+ *               assignedTo:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: User ID assigned to the task
+ *               dueDate:
  *                 type: string
  *                 format: date
  *     responses:
  *       200:
  *         description: Task updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 task:
+ *                   $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: Task not found
  *       500:
- *         description: Error updating task
+ *         description: Server error
  */
-router.put("/", authorizeUser, updateTask);
+router.put("/:id", authorizeUser, updateTask);
 
 /**
  * @swagger
@@ -115,6 +149,8 @@ router.put("/", authorizeUser, updateTask);
  *   delete:
  *     summary: Delete a task by ID
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []  # Authentication needed
  *     parameters:
  *       - in: path
  *         name: id
@@ -127,8 +163,7 @@ router.put("/", authorizeUser, updateTask);
  *       500:
  *         description: Error deleting task
  */
-router.delete("/", authorizeUser, deleteTask);
-
+router.delete("/:id", authorizeUser, deleteTask);
 
 /**
  * @swagger
@@ -136,6 +171,8 @@ router.delete("/", authorizeUser, deleteTask);
  *   post:
  *     summary: Create a comment for a task
  *     tags: [Comments]
+ *     security:
+ *       - bearerAuth: []  # Authentication needed
  *     parameters:
  *       - in: path
  *         name: id
@@ -159,7 +196,7 @@ router.delete("/", authorizeUser, deleteTask);
  *       500:
  *         description: Error adding comment
  */
-router.post("/:id/comments", createComment);
+router.post("/:id/comments", authorizeUser, createComment);
 
 /**
  * @swagger
@@ -167,6 +204,8 @@ router.post("/:id/comments", createComment);
  *   get:
  *     summary: Get all comments for a task
  *     tags: [Comments]
+ *     security:
+ *       - bearerAuth: []  # Authentication needed
  *     parameters:
  *       - in: path
  *         name: id
@@ -185,6 +224,6 @@ router.post("/:id/comments", createComment);
  *       500:
  *         description: Error fetching comments
  */
-router.get("/:id/comments", getComments);
+router.get("/:id/comments", authorizeUser, getComments);
 
 module.exports = router;

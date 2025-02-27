@@ -43,8 +43,7 @@ router.post("/", createComment);
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Comment'
+ *               
  *       500:
  *         description: Error fetching comments
  */
