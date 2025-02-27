@@ -24,9 +24,9 @@ exports.getComments = async (req, res) => {
     const task = await Task.findById({ _id: taskId }).populate("assignedTo");
 
     if (
-      !task ||
-      !task.assignedTo.some((user) => user._id.toString() === userId) ||
-      !task.createdBy.toString() == userId
+      !task || 
+      (!task.assignedTo.some((user) => user._id.toString() === userId) &&
+       task.createdBy.toString() !== userId)
     ) {
       return res.status(403).json({
         message: "You are not authorized to view comments for this task",
