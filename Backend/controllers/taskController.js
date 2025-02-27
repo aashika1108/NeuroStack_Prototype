@@ -41,7 +41,7 @@ exports.getTasks = async (req, res) => {
   try {
     if (req.user.role === "admin") {
       // Admin can view all tasks
-      const tasks = await Task.find().populate("assignedTo", "name email");
+      const tasks = await Task.find({ createdBy: req.user.userId }).populate("assignedTo", "name email");
       return res.json(tasks);
     } else {
       // User can only view their own tasks

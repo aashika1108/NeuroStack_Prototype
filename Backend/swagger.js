@@ -24,7 +24,8 @@ const options = {
             _id: { type: "string" },
             title: { type: "string" },
             description: { type: "string" },
-            assignedTo: { type: "string" },
+            assignedTo: [{ type: "string" }],
+            createdBy: { type: "string" },
             status: {
               type: "string",
               enum: ["Pending", "In Progress", "Completed"],
