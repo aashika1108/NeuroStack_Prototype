@@ -22,11 +22,10 @@ exports.getComments = async (req, res) => {
     const userId = req.user.userId; // Assuming user ID is stored in the JWT payload
     // Check if the user is assigned to the task
     const task = await Task.findById({ _id: taskId }).populate("assignedTo");
-  
-    
+
     if (
       !task ||
-      task.assignedTo.some((user) => user._id.toString() === userId) ||
+      !task.assignedTo.some((user) => user._id.toString() === userId) ||
       !task.createdBy.toString() == userId
     ) {
       return res.status(403).json({
