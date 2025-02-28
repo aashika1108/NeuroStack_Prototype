@@ -1,26 +1,9 @@
+import React from "react"; // Ensure this is present
 import { useState, useEffect } from "react";
-import React from "react";
 import { useParams } from "react-router-dom";
+import { FaEdit } from "react-icons/fa"; // Import Font Awesome edit icon
 import { getTasks, updateTask } from "../services/api";
 import CommentSection from "../components/CommentSection";
-
-// Pencil Square Icon as SVG
-const PencilSquareIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="#9333ea"
-    className="w-10 h-10"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-    />
-  </svg>
-);
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -28,21 +11,25 @@ const TaskDetails = () => {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
+    console.log("Fetching task details...");
     fetchTask();
   }, [id]);
 
   const fetchTask = async () => {
     try {
       const response = await getTasks();
+      console.log("Tasks fetched:", response.data);
       const task = response.data.find((t) => t._id === id);
       setTask(task);
-      setFormData({
-        title: task.title,
-        description: task.description,
-        assignedTo: task.assignedTo.map((u) => u._id),
-        dueDate: task.dueDate.split("T")[0],
-        status: task.status,
-      });
+      if (task) {
+        setFormData({
+          title: task.title,
+          description: task.description,
+          assignedTo: task.assignedTo.map((u) => u._id),
+          dueDate: task.dueDate.split("T")[0],
+          status: task.status,
+        });
+      }
     } catch (error) {
       console.error("Error fetching task:", error);
     }
@@ -63,19 +50,13 @@ const TaskDetails = () => {
   return (
     <div className="container">
       <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
-        <PencilSquareIcon />
+        <FaEdit className="icon" color="#9333ea" size={24} /> {/* Use FaEdit with 24px size */}
         <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#1e293b" }}>Task Details</h1>
       </div>
       <div className="task-details-grid">
         <form
           onSubmit={handleSubmit}
-          style={{
-            background: "#fff",
-            borderRadius: "16px",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            padding: "40px",
-            transition: "transform 0.3s ease, box-shadow 0.3s ease",
-          }}
+          className="card"
           onMouseOver={(e) => {
             e.currentTarget.style.transform = "translateY(-5px)";
             e.currentTarget.style.boxShadow = "0 6px 18px rgba(0, 0, 0, 0.15)";

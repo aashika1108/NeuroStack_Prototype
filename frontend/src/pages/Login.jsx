@@ -1,25 +1,9 @@
-import React from "react"; // Add this import at the top
+import React from "react"; // Ensure this is present
 import { useState, useContext } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
+import { FaLock } from "react-icons/fa"; // Import Font Awesome lock icon
 import { login } from "../services/api";
 import AuthContext from "../context/AuthContext";
-
-// Lock Icon as SVG
-const LockIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="#9333ea"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-    />
-  </svg>
-);
 
 const Login = () => {
   const { login: loginUser } = useContext(AuthContext);
@@ -40,7 +24,7 @@ const Login = () => {
       <div className="card">
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
           <div className="icon-circle">
-            <LockIcon />
+            <FaLock className="icon" color="#9333ea" size={24} /> {/* Use FaLock with 24px size */}
           </div>
         </div>
         <h1>Welcome Back</h1>
@@ -65,6 +49,12 @@ const Login = () => {
           </div>
           <button type="submit">Sign In</button>
         </form>
+        <p style={{ textAlign: "center", marginTop: "16px", color: "#666" }}>
+          Don’t have an account?{' '}
+          <Link to="/register" style={{ color: "#9333ea", textDecoration: "none", fontWeight: "600" }}>
+            Register here
+          </Link>
+        </p>
       </div>
     </div>
   );
