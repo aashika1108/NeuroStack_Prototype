@@ -3,59 +3,30 @@ import { Link } from "react-router-dom";
 import { FaEye, FaTrash } from "react-icons/fa"; // Import Font Awesome icons
 
 const TaskCard = ({ task, onDelete }) => {
-  console.log("Rendering TaskCard with task:", task);
-  if (!task) return null;
-
-  const statusStyles = {
-    Pending: "status-pending",
-    "In Progress": "status-in-progress",
-    Completed: "status-completed",
-  };
-
-  const statusClass = statusStyles[task.status] || "status";
-
   return (
-    <div className="card">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-        <h3 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#1e293b", maxWidth: "80%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {task.title || "No Title"}
-        </h3>
-        <span className={statusClass}>
-          {task.status || "Unknown"}
-        </span>
-      </div>
-      <p style={{ color: "#666", marginTop: "12px", lineHeight: "1.5", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: "2", WebkitBoxOrient: "vertical" }}>
-        {task.description || "No Description"}
+    <div className="card" style={{ background: "#fff", borderRadius: "8px", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)", padding: "10px", margin: "0 auto 15px", width: "180px", maxWidth: "100%" }}> {/* Adjusted width, padding, and margin to match screenshot */}
+      <h3 style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#333", marginBottom: "8px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+        {task.title}
+      </h3>
+      <p style={{ color: "#666", marginBottom: "6px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+        {task.description || "No description"}
       </p>
-      <div style={{ marginTop: "16px", color: "#666", fontSize: "14px" }}>
-        <p>
-          <span style={{ fontWeight: "500", color: "#1e293b" }}>Due:</span>{" "}
-          {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "N/A"}
-        </p>
-        <p>
-          <span style={{ fontWeight: "500", color: "#1e293b" }}>Assigned:</span>{" "}
-          {task.assignedTo?.length
-            ? task.assignedTo.map((u) => u.name || "Unknown").join(", ")
-            : "None"}
-        </p>
-      </div>
-      <div className="task-actions" style={{ marginTop: "24px", display: "flex", gap: "16px" }}>
-        <Link
-          to={`/tasks/${task._id}`}
-          style={{
-            fontWeight: "500",
-          }}
-        >
-          <FaEye className="icon" color="#9333ea" /> {/* Use FaEye with 24px size */}
+      <p style={{ color: "#666", marginBottom: "6px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+        Due: {new Date(task.dueDate).toLocaleDateString()}
+      </p>
+      <p style={{ color: "#20a665", marginBottom: "6px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+        Status: <span className="status">{task.status}</span>
+      </p>
+      <p style={{ color: "#666", marginBottom: "10px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+        Assigned: {task.assignedTo.map((user) => user.name).join(", ") || "None"}
+      </p>
+      <div className="task-actions" style={{ textAlign: "center", marginTop: "8px" }}> {/* Adjusted margin to match screenshot */}
+        <Link to={`/tasks/${task._id}`} style={{ color: "#20a665", marginRight: "8px" }}>
+          <FaEye className="task-card-icon" color="#20a665" size={20} /> {/* Green icon, matching theme */}
           View
         </Link>
-        <button
-          onClick={() => onDelete(task._id)}
-          style={{
-            fontWeight: "500",
-          }}
-        >
-          <FaTrash className="icon" color="#ef4444" /> {/* Use FaTrash with 24px size */}
+        <button onClick={() => onDelete(task._id)} style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer" }}>
+          <FaTrash className="task-card-icon" color="#ef4444" size={20} /> {/* Red icon for delete, matching theme */}
           Delete
         </button>
       </div>

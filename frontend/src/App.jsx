@@ -13,7 +13,7 @@ const App = () => {
     return (
       <Router>
         <AuthProvider>
-          <Navbar />
+          <Navbar /> {/* Navbar included on all routes */}
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

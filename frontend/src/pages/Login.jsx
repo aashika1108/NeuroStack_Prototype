@@ -20,15 +20,15 @@ const Login = () => {
   };
 
   return (
-    <div className="center-flex">
-      <div className="card">
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+    <div className="login-container">
+      <div className="card no-scroll">
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}> {/* Slightly increased margin for bigger box */}
           <div className="icon-circle">
-            <FaLock className="icon" color="#9333ea" size={24} /> {/* Use FaLock with 24px size */}
+            <FaLock className="icon" color="#20a665" size={24} /> {/* Larger icon for bigger box */}
           </div>
         </div>
-        <h1>Welcome Back</h1>
-        <form onSubmit={handleSubmit}>
+        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", marginBottom: "24px", textAlign: "center" }}>Welcome Back</h1> {/* Larger font and centered for bigger box */}
+        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
           <div className="form-group">
             <input
               type="email"
@@ -36,6 +36,7 @@ const Login = () => {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="input"
+              style={{ textAlign: "center" }} /* Center input text */
             />
           </div>
           <div className="form-group">
@@ -45,13 +46,14 @@ const Login = () => {
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="input"
+              style={{ textAlign: "center" }} /* Center input text */
             />
           </div>
-          <button type="submit">Sign In</button>
+          <button type="submit" style={{ marginTop: "24px", display: "block", marginLeft: "auto", marginRight: "auto" }}>Sign In</button> {/* Centered button */}
         </form>
-        <p style={{ textAlign: "center", marginTop: "16px", color: "#666" }}>
+        <p style={{ textAlign: "center", marginTop: "24px", color: "#666", fontSize: "16px" }}> {/* Larger font and centered for bigger box */}
           Don’t have an account?{' '}
-          <Link to="/register" style={{ color: "#9333ea", textDecoration: "none", fontWeight: "600" }}>
+          <Link to="/register" style={{ color: "#20a665", textDecoration: "none", fontWeight: "600" }}>
             Register here
           </Link>
         </p>

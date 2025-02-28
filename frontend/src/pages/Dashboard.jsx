@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FaChartBar } from "react-icons/fa"; // Import Font Awesome icon
 import AuthContext from "../context/AuthContext";
 import { getTasks, deleteTask } from "../services/api";
@@ -11,14 +10,12 @@ const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    console.log("Fetching tasks...");
     fetchTasks();
   }, []);
 
   const fetchTasks = async () => {
     try {
       const response = await getTasks();
-      console.log("Tasks fetched:", response.data);
       setTasks(response.data || []);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -34,27 +31,25 @@ const Dashboard = () => {
     }
   };
 
-  console.log("Rendering Dashboard with user:", user, "and tasks:", tasks);
-
   return (
-    <div className="container">
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
-        <FaChartBar className="icon" color="#9333ea" /> {/* Use FaChartBar with 24px size */}
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#1e293b" }}>
-          {user?.role === "admin" ? "Admin Dashboard" : "Your Tasks"}
-        </h1>
-      </div>
-      {user?.role === "admin" && <TaskForm onTaskCreated={fetchTasks} />}
-      <div className="dashboard-grid">
-        {tasks.length ? (
-          tasks.map((task) => (
-            <TaskCard key={task._id} task={task} onDelete={handleDelete} />
-          ))
-        ) : (
-          <p style={{ gridColumn: "span 3", textAlign: "center", color: "#666", padding: "20px" }}>
-            No tasks yet. {user?.role === "admin" ? "Create one above!" : "Check back later!"}
-          </p>
-        )}
+    <div className="login-container">
+      <div className="dashboard-card no-scroll" style={{ boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)", padding: "20px", margin: "10px" }}> {/* Adjusted padding and margin to match screenshot */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px", textAlign: "left" }}> {/* Adjusted margin and gap to match screenshot */}
+          <FaChartBar className="icon" color="#20a665" size={24} /> {/* Green icon, matching theme */}
+          <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", margin: "0" }}>Admin Dashboard</h1> {/* Left-aligned, matching screenshot */}
+        </div>
+        {user?.role === "admin" && <TaskForm onTaskCreated={fetchTasks} style={{ marginBottom: "15px" }} />} {/* Adjusted margin to match screenshot */}
+        <div className="dashboard-grid" style={{ textAlign: "center", gap: "15px", padding: "0 10px", maxHeight: "70vh", overflowY: "auto" }}> {/* Adjusted gap and padding to match screenshot */}
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <TaskCard key={task._id} task={task} onDelete={handleDelete} style={{ display: "block", width: "180px", maxWidth: "100%", margin: "0 auto 15px", padding: "10px" }} /> // Moved comment outside JSX
+            ))
+          ) : (
+            <p style={{ textAlign: "center", color: "#666", padding: "10px", margin: "0" }}>
+              No tasks yet. Create one above!
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

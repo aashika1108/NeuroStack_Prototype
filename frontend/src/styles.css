@@ -8,7 +8,7 @@
 body {
   font-family: 'Arial', sans-serif;
   min-height: 100vh;
-  background: linear-gradient(45deg, #e0e7ff, #dbeafe, #ede9fe);
+  background: #d2f5e2; /* Very light green background */
   color: #333;
 }
 
@@ -19,96 +19,147 @@ body {
   padding: 40px 20px;
 }
 
+/* Login Container */
+.login-container {
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden; /* Prevent any scrolling */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Card Styles */
 .card {
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  border-radius: 8px; /* Simple, rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  padding: 36px; /* Increased padding for slightly bigger box (login, register, task details) */
   width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 500px; /* Default for login, register, task details */
+  transition: transform 0.2s ease; /* Simple hover effect */
+  max-height: 90vh; /* Limit card height to prevent overflow, but aim for no scroll */
+  overflow: hidden; /* Prevent scrolling within the card */
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px); /* Simple hover lift */
+}
+
+/* Dashboard-Specific Card Styles */
+.dashboard-card {
+  background: #fff;
+  border-radius: 8px; /* Simple, rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  padding: 40px; /* Increased padding for dashboard */
+  margin: 20px; /* Added margin for dashboard */
+  width: 100%;
+  max-width: 600px; /* Increased max-width for dashboard, matching screenshot */
+  transition: transform 0.2s ease; /* Simple hover effect */
+  max-height: 90vh; /* Limit card height to prevent overflow, but aim for no scroll */
+  overflow: hidden; /* Prevent scrolling within the card */
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px); /* Simple hover lift */
 }
 
 /* Form Styles */
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 16px; /* Increased margin for slightly bigger box */
 }
 
 .input,
 textarea,
 select {
   width: 100%;
-  padding: 12px;
+  padding: 14px; /* Increased padding for slightly bigger inputs */
   border: 1px solid #d1d5db;
-  border-radius: 12px;
+  border-radius: 6px; /* Smaller radius for simplicity */
   font-size: 16px;
   background: #f9fafb;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.2s ease;
+  text-align: center; /* Center input text */
 }
 
 .input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #9333ea;
-  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.3);
+  border-color: #20a665; /* Main color */
+  box-shadow: 0 0 0 2px rgba(32, 166, 101, 0.2); /* Simple focus shadow */
 }
 
 button {
   width: 100%;
-  padding: 12px 24px;
-  border-radius: 12px;
+  padding: 14px 24px; /* Increased padding for slightly bigger button */
+  border-radius: 6px; /* Smaller radius for simplicity */
   font-size: 16px;
   font-weight: bold;
-  background: linear-gradient(45deg, #9333ea, #7e22ce);
+  background: #20a665; /* Main color */
   color: #fff;
   border: none;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background 0.2s ease;
+  display: block; /* Ensure button is block-level for centering */
+  margin-left: auto;
+  margin-right: auto; /* Center button */
 }
 
 button:hover {
-  background: linear-gradient(45deg, #7e22ce, #6b21a8);
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(0);
+  background: #1a8a54; /* Darker shade of #20a665 */
 }
 
 /* Icon Styles */
 .icon {
-  width: 24px;
-  height: 24px;
-  transition: color 0.3s ease;
+  width: 24px; /* Larger icon for slightly bigger box (default) */
+  height: 24px; /* Larger icon for slightly bigger box (default) */
+  transition: color 0.2s ease;
+}
+
+/* TaskForm and TaskCard Icon Styles */
+.task-form-icon,
+.task-card-icon {
+  width: 20px; /* Smaller icon for TaskForm and TaskCard */
+  height: 20px; /* Smaller icon for TaskForm and TaskCard */
+  transition: color 0.2s ease;
+}
+
+/* Icon Circle Styles */
+.icon-circle {
+  background: #e9f5ee; /* Lighter green for contrast with #20a665 */
+  border-radius: 50%;
+  padding: 10px; /* Increased padding for larger circle */
+  width: 44px; /* Increased size for slightly bigger box */
+  height: 44px; /* Increased size for slightly bigger box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Heading */
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.5rem; /* Increased for slightly bigger box */
   font-weight: bold;
-  color: #1e293b;
-  margin-bottom: 32px;
+  color: #20a665; /* Main color for heading */
+  margin-bottom: 24px; /* Increased margin for slightly bigger box */
+  text-align: center; /* Center heading */
 }
 
-/* Flex Centering */
-.center-flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+h2 {
+  font-size: 1.5rem; /* Heading for TaskForm */
+  font-weight: bold;
+  color: #20a665; /* Main color for heading */
+  margin: 0;
+  text-align: center; /* Center heading */
 }
 
 /* Dashboard Grid */
 .dashboard-grid {
   display: grid;
-  gap: 24px;
+  gap: 16px; /* Reduced gap for tighter fit, matching screenshot */
   grid-template-columns: repeat(1, 1fr);
+  padding: 0 20px; /* Added padding for spacing */
 }
 
 @media (min-width: 640px) {
@@ -125,13 +176,13 @@ h1 {
 
 /* Navbar Styles */
 .navbar {
-  background: linear-gradient(45deg, #9333ea, #7e22ce);
+  background: #20a665; /* Main color */
   padding: 16px;
   color: #fff;
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Simpler shadow */
 }
 
 .navbar-content {
@@ -143,11 +194,20 @@ h1 {
   align-items: center;
 }
 
-.navbar-brand {
-  font-size: 2rem;
-  font-weight: bold;
-  text-decoration: none;
-  color: #fff;
+/* Navbar Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  max-width: 200px; /* Ensure logo fits within navbar */
+  height: auto;
+  transition: opacity 0.2s ease; /* Simple hover effect */
+}
+
+.navbar-logo img:hover {
+  opacity: 0.8; /* Subtle hover effect for logo */
 }
 
 .navbar-actions {
@@ -158,9 +218,9 @@ h1 {
 
 .navbar-actions button,
 .navbar-actions a {
-  background: #ef4444;
+  background: #ef4444; /* Kept red for logout/login for contrast */
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 6px; /* Smaller radius for simplicity */
   font-size: 16px;
   font-weight: bold;
   color: #fff;
@@ -170,18 +230,17 @@ h1 {
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background 0.2s ease;
 }
 
 .navbar-actions button:hover,
 .navbar-actions a:hover {
   background: #dc2626;
-  transform: translateY(-2px);
 }
 
 .navbar-actions button:active,
 .navbar-actions a:active {
-  transform: translateY(0);
+  background: #b91c1c; /* Darker red for active state */
 }
 
 /* Task Card Actions */
@@ -189,11 +248,12 @@ h1 {
   margin-top: 24px;
   display: flex;
   gap: 16px;
+  justify-content: center; /* Center actions */
 }
 
 .task-actions a,
 .task-actions button {
-  color: #9333ea;
+  color: #20a665; /* Main color */
   font-weight: 500;
   background: none;
   border: none;
@@ -202,16 +262,16 @@ h1 {
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .task-actions a:hover,
 .task-actions button:hover {
-  color: #7e22ce;
+  color: #1a8a54; /* Darker shade of #20a665 */
 }
 
 .task-actions button {
-  color: #ef4444;
+  color: #ef4444; /* Kept red for delete for contrast */
 }
 
 .task-actions button:hover {
@@ -220,24 +280,93 @@ h1 {
 
 /* Status Styles */
 .status-pending {
-  background: #fef2f2;
-  color: #dc2626;
+  background: #f0f9f4; /* Lighter green for contrast with #20a665 */
+  color: #20a665; /* Main color */
+  border: 1px solid #d1d5db; /* Simple border for clarity */
+  border-radius: 6px; /* Smaller radius for simplicity */
+  padding: 4px 8px;
+  display: inline-block;
+  margin: 0;
 }
 
-.status-in-progress { 
-  background: #fefcbf;
-  color: #d97706;
+.status-in-progress {
+  background: #f0f9f4; /* Lighter green for contrast with #20a665 */
+  color: #20a665; /* Main color */
+  border: 1px solid #d1d5db; /* Simple border for clarity */
+  border-radius: 6px; /* Smaller radius for simplicity */
+  padding: 4px 8px;
+  display: inline-block;
+  margin: 0;
 }
 
 .status-completed {
-  background: #d1fae5;
-  color: #059669;
+  background: #f0f9f4; /* Lighter green for contrast with #20a665 */
+  color: #20a665; /* Main color */
+  border: 1px solid #d1d5db; /* Simple border for clarity */
+  border-radius: 6px; /* Smaller radius for simplicity */
+  padding: 4px 8px;
+  display: inline-block;
+  margin: 0;
 }
 
 .status {
   padding: 8px 12px;
-  border-radius: 8px;
   font-size: 12px;
   font-weight: 500;
   display: inline-block;
+}
+
+/* Dashboard-Specific Card Styles (Confirmed) */
+.dashboard-card {
+  background: #fff;
+  border-radius: 8px; /* Simple, rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  padding: 40px; /* Increased padding for dashboard */
+  margin: 20px; /* Added margin for dashboard */
+  width: 100%;
+  max-width: 600px; /* Increased max-width for dashboard, matching screenshot */
+  transition: transform 0.2s ease; /* Simple hover effect */
+  max-height: 90vh; /* Limit card height to prevent overflow, but aim for no scroll */
+  overflow: hidden; /* Prevent scrolling within the card */
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px); /* Simple hover lift */
+}
+
+/* Dashboard Grid (Confirmed, Adjusted for Task Cards) */
+.dashboard-grid {
+  display: grid;
+  gap: 16px; /* Reduced gap for tighter fit, matching screenshot (adjusted to 15px in Dashboard.jsx) */
+  grid-template-columns: repeat(1, 1fr);
+  padding: 0 20px; /* Added padding for spacing (adjusted to 0 10px in Dashboard.jsx) */
+}
+
+@media (min-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Task Card Styles (Confirmed, Adjusted for Width) */
+.card {
+  background: #fff;
+  border-radius: 8px; /* Simple, rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  padding: 36px; /* Increased padding for slightly bigger box (login, register, task details) */
+  width: 100%;
+  max-width: 500px; /* Default for login, register, task details */
+  transition: transform 0.2s ease; /* Simple hover effect */
+  max-height: 90vh; /* Limit card height to prevent overflow, but aim for no scroll */
+  overflow: hidden; /* Prevent scrolling within the card */
+}
+
+.card:hover {
+  transform: translateY(-2px); /* Simple hover lift */
 }
