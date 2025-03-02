@@ -8,25 +8,25 @@ const TaskCard = ({ task, onDelete }) => {
       <h3 style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#333", marginBottom: "8px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
         {task.title}
       </h3>
-      <p style={{ color: "#666", marginBottom: "6px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+      <p style={{ color: "#666", marginBottom: "6px", textAlign: "center", padding: "4px" }}> {/* Added padding for visibility */}
         {task.description || "No description"}
       </p>
-      <p style={{ color: "#666", marginBottom: "6px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+      <p style={{ color: "#666", marginBottom: "6px", textAlign: "center", padding: "4px" }}> {/* Added padding for visibility */}
         Due: {new Date(task.dueDate).toLocaleDateString()}
       </p>
       <p style={{ color: "#20a665", marginBottom: "6px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
-        Status: <span className="status">{task.status}</span>
+        Status: <span className="status" style={{ padding: "4px 8px" }}>{task.status}</span> {/* Added padding for visibility */}
       </p>
-      <p style={{ color: "#666", marginBottom: "10px", textAlign: "center" }}> {/* Adjusted margin to match screenshot */}
+      <p style={{ color: "#666", marginBottom: "10px", textAlign: "center", padding: "4px" }}> {/* Added padding for visibility */}
         Assigned: {task.assignedTo.map((user) => user.name).join(", ") || "None"}
       </p>
       <div className="task-actions" style={{ textAlign: "center", marginTop: "8px" }}> {/* Adjusted margin to match screenshot */}
-        <Link to={`/tasks/${task._id}`} style={{ color: "#20a665", marginRight: "8px" }}>
-          <FaEye className="task-card-icon" color="#20a665" size={20} /> {/* Green icon, matching theme */}
+        <Link to={`/tasks/${task._id}`} style={{ color: "#20a665", marginRight: "8px", padding: "6px 12px" }}> {/* Increased padding for visibility */}
+          <FaEye className="task-card-icon" color="#20a665" size={20} /> {/* Green icon, matching theme and screenshot */}
           View
         </Link>
-        <button onClick={() => onDelete(task._id)} style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer" }}>
-          <FaTrash className="task-card-icon" color="#ef4444" size={20} /> {/* Red icon for delete, matching theme */}
+        <button onClick={() => onDelete(task._id)} style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer", padding: "6px 12px" }}> {/* Increased padding for visibility */}
+          <FaTrash className="task-card-icon" color="#ef4444" size={20} /> {/* Red icon for delete, matching theme and screenshot */}
           Delete
         </button>
       </div>

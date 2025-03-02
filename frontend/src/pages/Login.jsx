@@ -21,13 +21,13 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="card no-scroll">
+      <div className="login-card">
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}> {/* Slightly increased margin for bigger box */}
           <div className="icon-circle">
             <FaLock className="icon" color="#20a665" size={24} /> {/* Larger icon for bigger box */}
           </div>
         </div>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", marginBottom: "24px", textAlign: "center" }}>Welcome Back</h1> {/* Larger font and centered for bigger box */}
+        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", marginBottom: "24px", textAlign: "center" }}>Welcome Task Management</h1> {/* Larger font and centered for bigger box */}
         <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
           <div className="form-group">
             <input
