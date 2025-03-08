@@ -1,7 +1,6 @@
-import React from "react"; // Ensure this is present
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { FaEdit } from "react-icons/fa"; // Import Font Awesome edit icon
+import { FaEdit } from "react-icons/fa";
 import { getTasks, updateTask } from "../services/api";
 import CommentSection from "../components/CommentSection";
 
@@ -45,27 +44,16 @@ const TaskDetails = () => {
     }
   };
 
-  if (!task) return <div className="container" style={{ textAlign: "center", color: "#666", padding: "40px" }}>Loading...</div>;
+  if (!task) return <div className="container" style={{ textAlign: 'center', color: '#666', padding: '40px' }}>Loading...</div>;
 
   return (
     <div className="container">
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
-        <FaEdit className="icon" color="#9333ea" size={24} /> {/* Use FaEdit with 24px size */}
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#1e293b" }}>Task Details</h1>
+      <div className="flex items-center gap-3 mb-8">
+        <FaEdit style={{ color: '#20a665' }} size={24} />
+        <h1>Task Details</h1>
       </div>
       <div className="task-details-grid">
-        <form
-          onSubmit={handleSubmit}
-          className="card"
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = "translateY(-5px)";
-            e.currentTarget.style.boxShadow = "0 6px 18px rgba(0, 0, 0, 0.15)";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = "none";
-            e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
-          }}
-        >
+        <form onSubmit={handleSubmit} className="card">
           <div className="form-group">
             <input
               type="text"
@@ -77,9 +65,7 @@ const TaskDetails = () => {
           <div className="form-group">
             <textarea
               value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="input"
               rows="3"
             />
@@ -88,9 +74,7 @@ const TaskDetails = () => {
             <input
               type="text"
               value={formData.assignedTo.join(",")}
-              onChange={(e) =>
-                setFormData({ ...formData, assignedTo: e.target.value.split(",") })
-              }
+              onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value.split(",") })}
               className="input"
             />
           </div>

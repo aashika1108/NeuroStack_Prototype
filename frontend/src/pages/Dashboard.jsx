@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaChartBar, FaPlus } from "react-icons/fa"; // Import Font Awesome icons
+import { FaChartBar } from "react-icons/fa";
 import AuthContext from "../context/AuthContext";
 import { getTasks, deleteTask } from "../services/api";
 import TaskCard from "../components/TaskCard";
@@ -33,19 +33,19 @@ const Dashboard = () => {
 
   return (
     <div className="login-container">
-      <div className="dashboard-card no-scroll" style={{ boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)", padding: "20px", margin: "10px", width: "100%" }}> {/* 100% width maintained */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px", textAlign: "left" }}> {/* Adjusted margin and gap to match screenshot */}
-          <FaChartBar className="icon" color="#20a665" size={24} /> {/* Green chart icon, matching theme and screenshot */}
-          <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", margin: "0" }}>Admin Dashboard</h1> {/* Left-aligned, matching screenshot */}
+      <div className="dashboard-card">
+        <div className="flex items-center gap-3 mb-6">
+          <FaChartBar style={{ color: '#20a665' }} size={24} />
+          <h1>Admin Dashboard</h1>
         </div>
-        {user?.role === "admin" && <TaskForm onTaskCreated={fetchTasks} style={{ marginBottom: "15px", width: "70%" }} />} {/* Set width to 70% */}
-        <div className="dashboard-grid" style={{ textAlign: "center", gap: "15px", padding: "0 10px", maxHeight: "70vh", overflowY: "auto" }}> {/* Adjusted gap and padding to match screenshot */}
+        {user?.role === "admin" && <TaskForm onTaskCreated={fetchTasks} />}
+        <div className="dashboard-grid">
           {tasks.length > 0 ? (
             tasks.map((task) => (
-              <TaskCard key={task._id} task={task} onDelete={handleDelete} style={{ display: "block", width: "180px", maxWidth: "100%", margin: "0 auto 15px", padding: "10px" }} /> // Unchanged task cards
+              <TaskCard key={task._id} task={task} onDelete={handleDelete} />
             ))
           ) : (
-            <p style={{ textAlign: "center", color: "#666", padding: "10px", margin: "0" }}>
+            <p style={{ textAlign: 'center', color: '#666', padding: '10px', margin: '0' }}>
               No tasks yet. Create one above!
             </p>
           )}

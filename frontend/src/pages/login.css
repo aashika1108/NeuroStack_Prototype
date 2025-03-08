@@ -1,0 +1,126 @@
+/* Login.css */
+
+.container {
+  width: 400px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form Box Styles */
+.form-box {
+  width: 100%;
+  text-align: center;
+}
+
+.form-box h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #20a665; /* Match dashboard theme */
+  margin-bottom: 1.5rem;
+  font-family: 'Arial', sans-serif; /* Match body font */
+}
+
+/* Input Box Styles */
+.input-box {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.input-box input {
+  width: 100%;
+  height: 50px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  background: #f9fafb;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-box input:focus {
+  outline: none;
+  border-color: #20a665;
+  box-shadow: 0 0 0 3px rgba(32, 166, 101, 0.2);
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #666;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -10px;
+  font-size: 0.875rem;
+  color: #20a665;
+  background: #ffffff;
+  padding: 0 0.25rem;
+}
+
+.input-box i {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  font-size: 1.125rem;
+  color: #20a665;
+  transition: color 0.3s ease;
+}
+
+.input-box input:focus ~ i {
+  color: #1a8a54;
+}
+
+/* Button Styles */
+.btn {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(135deg, #20a665 0%, #1a8a54 100%);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #1a8a54 0%, #16653a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(32, 166, 101, 0.3);
+}
+
+/* Registration Link Styles */
+.regi-link {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.regi-link a {
+  color: #20a665;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.regi-link a:hover {
+  color: #1a8a54;
+  text-decoration: underline;
+}

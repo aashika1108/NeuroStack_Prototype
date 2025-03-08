@@ -1,62 +1,86 @@
-import React from "react"; // Ensure this is present
-import { useState, useContext } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
-import { FaLock } from "react-icons/fa"; // Import Font Awesome lock icon
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/api";
 import AuthContext from "../context/AuthContext";
+import "./Login.css"; // Using the simplified, modern CSS from the last response
 
 const Login = () => {
-  const { login: loginUser } = useContext(AuthContext);
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+  const { login: contextLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    setError(""); // Clear error on input change
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(formData);
-      loginUser(response.data.token);
-    } catch (error) {
-      console.error("Login error:", error);
+      const response = await login(credentials);
+      contextLogin(response.data.token); // Assuming the API returns { token }
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Invalid username or password. Please try again.");
     }
   };
 
   return (
     <div className="login-container">
-      <div className="login-card">
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}> {/* Slightly increased margin for bigger box */}
-          <div className="icon-circle">
-            <FaLock className="icon" color="#20a665" size={24} /> {/* Larger icon for bigger box */}
+      <nav className="navbar">
+        <div className="navbar-content">
+          <div className="navbar-logo">
+            <img src="/src/assets/logo.png" alt="NeuroStack Logo" />
+          </div>
+          <div className="navbar-actions">
+            <Link to="/login" className="navbar-actions">Login</Link>
+            <Link to="/register" className="navbar-actions">Register</Link>
           </div>
         </div>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", marginBottom: "24px", textAlign: "center" }}>Welcome Task Management</h1> {/* Larger font and centered for bigger box */}
-        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-          <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="input"
-              style={{ textAlign: "center" }} /* Center input text */
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="input"
-              style={{ textAlign: "center" }} /* Center input text */
-            />
-          </div>
-          <button type="submit" style={{ marginTop: "24px", display: "block", marginLeft: "auto", marginRight: "auto" }}>Sign In</button> {/* Centered button */}
-        </form>
-        <p style={{ textAlign: "center", marginTop: "24px", color: "#666", fontSize: "16px" }}> {/* Larger font and centered for bigger box */}
-          Don’t have an account?{' '}
-          <Link to="/register" style={{ color: "#20a665", textDecoration: "none", fontWeight: "600" }}>
-            Register here
-          </Link>
-        </p>
+      </nav>
+
+      <div className="container">
+        <div className="form-box">
+          <h2>Login</h2>
+          <form onSubmit={handleSubmit}>
+            {error && <p style={{ color: "#ef4444", textAlign: "center", marginBottom: "1rem" }}>{error}</p>}
+            <div className="input-box">
+              <input
+                type="text"
+                name="username"
+                value={credentials.username}
+                onChange={handleChange}
+                required
+              />
+              <label>Username</label>
+              <i className="bx bxs-user"></i>
+            </div>
+            <div className="input-box">
+              <input
+                type="password"
+                name="password"
+                value={credentials.password}
+                onChange={handleChange}
+                required
+              />
+              <label>Password</label>
+              <i className="bx bxs-lock-alt"></i>
+            </div>
+            <div className="input-box">
+              <button className="btn" type="submit">Login</button>
+            </div>
+            <div className="regi-link">
+              <p>
+                Don't have an account? <br />
+                <a href="#" onClick={(e) => { e.preventDefault(); navigate("/register"); }}>
+                  Sign Up
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

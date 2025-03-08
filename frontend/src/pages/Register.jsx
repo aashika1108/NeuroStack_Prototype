@@ -1,87 +1,65 @@
-import React from "react"; // Ensure this is present
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate for navigation
-import { FaUserPlus } from "react-icons/fa"; // Import Font Awesome user plus icon
-import { register } from "../services/api";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.css"; // Using the simplified, modern CSS
 
 const Register = () => {
+  const [isActive, setIsActive] = useState(true); // Kept for potential future use, though not currently active
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "user",
-  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await register(formData);
-      navigate("/login");
-    } catch (error) {
-      console.error("Registration error:", error);
-    }
+  useEffect(() => {
+    setIsActive(true);
+  }, []);
+
+  const handleSignInClick = () => {
+    navigate("/login");
   };
 
   return (
     <div className="login-container">
-      <div className="card no-scroll" style={{ boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)" }}>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}>
-          <div className="icon-circle">
-            <FaUserPlus className="icon" color="#20a665" size={24} /> {/* Green icon for theme, matching Login */}
+      <nav className="navbar">
+        <div className="navbar-content">
+          <div className="navbar-logo">
+            <img src="/src/assets/logo.png" alt="NeuroStack Logo" />
+          </div>
+          <div className="navbar-actions">
+            <Link to="/login" className="navbar-actions">Login</Link>
+            <Link to="/register" className="navbar-actions">Register</Link>
           </div>
         </div>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#20a665", marginBottom: "24px", textAlign: "center" }}>Join NeuroStack</h1> {/* Matching Login font and color */}
-        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="input"
-              style={{ textAlign: "center" }} /* Center input text, matching Login */
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="input"
-              style={{ textAlign: "center" }} /* Center input text, matching Login */
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="input"
-              style={{ textAlign: "center" }} /* Center input text, matching Login */
-            />
-          </div>
-          <div className="form-group">
-            <select
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              className="input"
-              style={{ textAlign: "center" }} /* Center select text, matching Login */
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-          <button type="submit" style={{ marginTop: "24px", display: "block", marginLeft: "auto", marginRight: "auto" }}>Sign Up</button> {/* Centered button, matching Login */}
-        </form>
-        <p style={{ textAlign: "center", marginTop: "24px", color: "#666", fontSize: "16px" }}> {/* Matching Login font and color */}
-          Already have an account?{' '}
-          <Link to="/login" style={{ color: "#20a665", textDecoration: "none", fontWeight: "600" }}> {/* Matching Login color and style */}
-            Login here
-          </Link>
-        </p>
+      </nav>
+
+      <div className="container">
+        <div className="form-box">
+          <h2>Register</h2>
+          <form action="#">
+            <div className="input-box">
+              <input type="text" required />
+              <label>Username</label>
+              <i className="bx bxs-user"></i>
+            </div>
+            <div className="input-box">
+              <input type="email" required />
+              <label>Email</label>
+              <i className="bx bxs-envelope"></i>
+            </div>
+            <div className="input-box">
+              <input type="password" required />
+              <label>Password</label>
+              <i className="bx bxs-lock-alt"></i>
+            </div>
+            <div className="input-box">
+              <button className="btn" type="submit">Register</button>
+            </div>
+            <div className="regi-link">
+              <p>
+                Already have an account? <br />
+                <a href="#" onClick={(e) => { e.preventDefault(); handleSignInClick(); }}>
+                  Sign In
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
