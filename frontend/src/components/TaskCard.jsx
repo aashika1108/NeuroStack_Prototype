@@ -1,31 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaEye, FaTrash } from "react-icons/fa";
+// src/components/TaskCard.jsx
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react'; // Update this
 
-const TaskCard = ({ task, onDelete }) => {
+const TaskCard = ({ task, fetchTasks }) => {
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/tasks/${task._id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      fetchTasks(); // Refresh tasks after deletion
+    } catch (err) {
+      alert('Error deleting task');
+    }
+  };
+
   return (
-    <div className="card">
-      <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#333', marginBottom: '8px', textAlign: 'center' }}>
-        {task.title}
-      </h3>
-      <p style={{ color: '#666', marginBottom: '6px', textAlign: 'center', padding: '4px' }}>
-        {task.description || "No description"}
-      </p>
-      <p style={{ color: '#666', marginBottom: '6px', textAlign: 'center', padding: '4px' }}>
-        Due: {new Date(task.dueDate).toLocaleDateString()}
-      </p>
-      <p style={{ textAlign: 'center', marginBottom: '6px' }}>
-        Status: <span className={`status ${task.status.toLowerCase().replace(" ", "-")}`}>{task.status}</span>
-      </p>
-      <p style={{ color: '#666', marginBottom: '10px', textAlign: 'center', padding: '4px' }}>
-        Assigned: {task.assignedTo.map((user) => user.name).join(", ") || "None"}
-      </p>
-      <div className="task-actions">
-        <Link to={`/tasks/${task._id}`} className="task-actions">
-          <FaEye style={{ color: '#20a665' }} size={16} /> View
-        </Link>
-        <button onClick={() => onDelete(task._id)} className="task-actions">
-          <FaTrash style={{ color: '#ef4444' }} size={16} /> Delete
+    <div className="task-card">
+      <div>
+        <h3>{task.title}</h3>
+        <p>{task.description}</p>
+        <p>Status: {task.status}</p>
+        <p>Due: {new Date(task.dueDate).toLocaleDateString()}</p>
+      </div>
+      <div>
+        <button onClick={() => navigate(`/tasks/${task._id}`)}>View</button>
+        <button onClick={handleDelete} style={{ backgroundColor: '#e74c3c' }}>
+          Delete
         </button>
       </div>
     </div>

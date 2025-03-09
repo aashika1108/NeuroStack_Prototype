@@ -1,66 +1,63 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./Login.css"; // Using the simplified, modern CSS
+// src/pages/Register.jsx
+import React, { useState } from 'react'; // Update this
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
-  const [isActive, setIsActive] = useState(true); // Kept for potential future use, though not currently active
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setIsActive(true);
-  }, []);
-
-  const handleSignInClick = () => {
-    navigate("/login");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/register', {
+        name,
+        email,
+        password,
+        role: 'user', // Default role
+      });
+      localStorage.setItem('token', res.data.token);
+      navigate('/dashboard');
+    } catch (err) {
+      alert('Error registering user');
+    }
   };
 
   return (
-    <div className="login-container">
-      <nav className="navbar">
-        <div className="navbar-content">
-          <div className="navbar-logo">
-            <img src="/src/assets/logo.png" alt="NeuroStack Logo" />
-          </div>
-          <div className="navbar-actions">
-            <Link to="/login" className="navbar-actions">Login</Link>
-            <Link to="/register" className="navbar-actions">Register</Link>
-          </div>
-        </div>
-      </nav>
-
-      <div className="container">
-        <div className="form-box">
-          <h2>Register</h2>
-          <form action="#">
-            <div className="input-box">
-              <input type="text" required />
-              <label>Username</label>
-              <i className="bx bxs-user"></i>
-            </div>
-            <div className="input-box">
-              <input type="email" required />
-              <label>Email</label>
-              <i className="bx bxs-envelope"></i>
-            </div>
-            <div className="input-box">
-              <input type="password" required />
-              <label>Password</label>
-              <i className="bx bxs-lock-alt"></i>
-            </div>
-            <div className="input-box">
-              <button className="btn" type="submit">Register</button>
-            </div>
-            <div className="regi-link">
-              <p>
-                Already have an account? <br />
-                <a href="#" onClick={(e) => { e.preventDefault(); handleSignInClick(); }}>
-                  Sign In
-                </a>
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div className="form-container">
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
+      <p>
+        Already have an account?{' '}
+        <a href="/" style={{ color: '#3498db' }}>
+          Login
+        </a>
+      </p>
     </div>
   );
 };

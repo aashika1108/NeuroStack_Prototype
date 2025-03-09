@@ -1,106 +1,91 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
-import { getTasks, updateTask } from "../services/api";
-import CommentSection from "../components/CommentSection";
+// src/pages/TaskDetails.jsx
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const TaskDetails = () => {
   const { id } = useParams();
   const [task, setTask] = useState(null);
-  const [formData, setFormData] = useState({});
-
-  useEffect(() => {
-    console.log("Fetching task details...");
-    fetchTask();
-  }, [id]);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState('');
 
   const fetchTask = async () => {
     try {
-      const response = await getTasks();
-      console.log("Tasks fetched:", response.data);
-      const task = response.data.find((t) => t._id === id);
-      setTask(task);
-      if (task) {
-        setFormData({
-          title: task.title,
-          description: task.description,
-          assignedTo: task.assignedTo.map((u) => u._id),
-          dueDate: task.dueDate.split("T")[0],
-          status: task.status,
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching task:", error);
+      const res = await axios.get(`http://localhost:5000/api/tasks/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      setTask(res.data.task);
+    } catch (err) {
+      alert('Error fetching task');
     }
   };
 
-  const handleSubmit = async (e) => {
+  const fetchComments = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/tasks/${id}/comments`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      );
+      setComments(res.data);
+    } catch (err) {
+      alert('Error fetching comments');
+    }
+  };
+
+  useEffect(() => {
+    fetchTask();
+    fetchComments();
+  }, [id]);
+
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateTask(id, formData);
-      fetchTask();
-    } catch (error) {
-      console.error("Error updating task:", error);
+      await axios.post(
+        `http://localhost:5000/api/tasks/${id}/comments`,
+        { comment },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      setComment('');
+      fetchComments();
+    } catch (err) {
+      alert('Error adding comment');
     }
   };
 
-  if (!task) return <div className="container" style={{ textAlign: 'center', color: '#666', padding: '40px' }}>Loading...</div>;
+  if (!task) return <p className="loading">Loading task details...</p>;
 
   return (
-    <div className="container">
-      <div className="flex items-center gap-3 mb-8">
-        <FaEdit style={{ color: '#20a665' }} size={24} />
-        <h1>Task Details</h1>
-      </div>
-      <div className="task-details-grid">
-        <form onSubmit={handleSubmit} className="card">
-          <div className="form-group">
-            <input
-              type="text"
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="input"
-            />
+    <div className="task-details">
+      <h2>{task.title}</h2>
+      <p><strong>Description:</strong> {task.description}</p>
+      <p><strong>Status:</strong> {task.status}</p>
+      <p><strong>Due:</strong> {new Date(task.dueDate).toLocaleDateString()}</p>
+      <p><strong>Assigned To:</strong> {task.assignedTo.map((user) => user.name).join(', ')}</p>
+
+      <h3>Comments</h3>
+      {comments.length === 0 ? (
+        <p>No comments yet. Be the first to add one!</p>
+      ) : (
+        comments.map((c) => (
+          <div key={c._id} className="comment">
+            <p>{c.comment}</p>
+            <small>{new Date(c.createdAt).toLocaleString()}</small>
           </div>
-          <div className="form-group">
-            <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="input"
-              rows="3"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              value={formData.assignedTo.join(",")}
-              onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value.split(",") })}
-              className="input"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="date"
-              value={formData.dueDate}
-              onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-              className="input"
-            />
-          </div>
-          <div className="form-group">
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="input"
-            >
-              <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </div>
-          <button type="submit">Update Task</button>
-        </form>
-        <CommentSection taskId={id} />
-      </div>
+        ))
+      )}
+
+      <form onSubmit={handleCommentSubmit} className="comment-form">
+        <textarea
+          placeholder="Add a comment..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          required
+          rows="3"
+        />
+        <button type="submit">Post Comment</button>
+      </form>
     </div>
   );
 };
