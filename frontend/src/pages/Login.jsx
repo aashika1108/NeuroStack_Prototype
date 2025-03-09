@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Update this
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ const Login = () => {
       localStorage.setItem('token', res.data.token);
       navigate('/dashboard');
     } catch (err) {
-      alert('Invalid credentials');
+      alert(err.response?.data?.message || 'Invalid credentials');
     }
   };
 
@@ -43,7 +43,7 @@ const Login = () => {
       </form>
       <p>
         Don't have an account?{' '}
-        <a href="/register" style={{ color: '#3498db' }}>
+        <a href="/register" style={{ color: '#4a90e2' }}>
           Register
         </a>
       </p>

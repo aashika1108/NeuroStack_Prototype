@@ -1,5 +1,4 @@
-// src/pages/Register.jsx
-import React, { useState } from 'react'; // Update this
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,6 +6,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,12 +16,12 @@ const Register = () => {
         name,
         email,
         password,
-        role: 'user', // Default role
+        role,
       });
       localStorage.setItem('token', res.data.token);
       navigate('/dashboard');
     } catch (err) {
-      alert('Error registering user');
+      alert(err.response?.data?.message || 'Error registering user');
     }
   };
 
@@ -50,11 +50,15 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
         <button type="submit">Register</button>
       </form>
       <p>
         Already have an account?{' '}
-        <a href="/" style={{ color: '#3498db' }}>
+        <a href="/" style={{ color: '#4a90e2' }}>
           Login
         </a>
       </p>
