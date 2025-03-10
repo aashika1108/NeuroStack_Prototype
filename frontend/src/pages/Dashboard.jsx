@@ -80,7 +80,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
+      <h1>Control Hub: Your Command Center Awaits!</h1>
       <div className="search-container">
         <input
           type="text"
