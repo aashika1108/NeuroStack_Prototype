@@ -16,9 +16,11 @@ The backend of NeuroStack is powered by a Node.js and Express server, with a Mon
 The frontend is built using React.js, providing a dynamic and user-friendly interface. It features a clean design with a split layout for the authentication pages (logo on the left, form on the right) and a dashboard for task management. The UI is responsive, utilizing CSS for styling and React Router for navigation.
 
 
-- **Developer**: Aashika Vachhani, Preet Ojha 
-- **Role**: Backend Developer, Frontend Developer  
-- **Contribution**: 
+**Developer**: Aashika Vachhani, Preet Ojha
+
+**Role**: Backend Developer, Frontend Developer  
+
+**Contribution**:
 Aashika, a college student interning at NeuroStack, developed the backend infrastructure. Her work includes setting up the server, designing the database schema, implementing API endpoints, and ensuring secure data handling. Her efforts have been instrumental in creating a reliable foundation for the application.
 
 Preet developed the frontend interface, focusing on the design and functionality of the login, registration, and dashboard pages. This includes implementing the wireframe-inspired layout, adding interactive elements like password visibility toggles, and ensuring a seamless user experience across devices.
@@ -41,14 +43,11 @@ Preet developed the frontend interface, focusing on the design and functionality
 ## Screenshots
 Below are some screenshots of the NeuroStack application:
 
-![Login Page Screenshot](path/to/login-screenshot.png)
+![Login Page Screenshot](https://github.com/user-attachments/assets/775a0eff-b997-4bc4-b1cf-df5f8da7ce15)
 *Description*: The login page with the logo on the left and form on the right.
 
-![Registration Page Screenshot](path/to/register-screenshot.png)
-*Description*: The registration page showcasing the form fields and design.
-
-![Dashboard Screenshot](path/to/dashboard-screenshot.png)
-*Description*: The task management dashboard interface.
+![Admin Dashboard Screenshot](https://github.com/user-attachments/assets/d281bf0f-9fc3-40ab-aacc-b9db965dc5a2)
+*Description*: The task management dashboard interface for Admin.
 
 *(Note: Replace `path/to/` with the actual file paths or URLs of your screenshots. Upload the images to the repository or a hosting service and update the links accordingly.)*
 
